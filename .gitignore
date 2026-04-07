@@ -1,0 +1,30 @@
+
+# Caches do Python (Essencial)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ambientes Virtuais (Nunca suba o venv pro GitHub)
+venv/
+env/
+.venv/
+.env
+
+# Arquivos Temporários de Áudio 
+# (Caso você volte a fazer testes salvando áudio no disco)
+*.wav
+*.mp3
+*.ogg
+temp_audio.wav
+
+# IDEs e Editores (Configurações da sua máquina local)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs e Arquivos do Sistema Operacional
+*.log
+.DS_Store
+Thumbs.db
