@@ -26,7 +26,7 @@ sudo pacman -S ffmpeg
 
 # Certifique-se de ter o Ollama rodando
 ollama run llama3.2
-
+```
 
 ```bash
 # Instalação e Execução
