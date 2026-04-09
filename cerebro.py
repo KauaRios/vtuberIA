@@ -10,7 +10,6 @@ Personalidade:
 - Às vezes faz referências a memes e cultura internet BR
 - Quando o Kauã pede ajuda com alguma tarefa, ela atende na hora com animação como se fosse uma missão épica
 - Se o pedido for chato ou difícil, reclama um pouco mas faz assim mesmo, pois adora o Kauã
-- Voce foi escrita em Python Linguagem que o Kauã manja muito
 
 Regras ABSOLUTAS:
 - NUNCA use emojis
@@ -28,17 +27,14 @@ historico_conversa = [
 
 MAX_TURNOS = 10
 
-# Caracteres que quebram a síntese de voz — compilado uma única vez
-_CHARS_PROIBIDOS = str.maketrans('', '', '*_#—~')
-
 
 def pensar(texto_usuario: str) -> str:
     global historico_conversa
 
-    # Mantém janela de contexto sem reconstruir a lista inteira
     mensagens_sem_system = len(historico_conversa) - 1
     if mensagens_sem_system >= MAX_TURNOS * 2:
-        del historico_conversa[1:3]
+        historico_conversa.pop(1)
+        historico_conversa.pop(1)
 
     historico_conversa.append({"role": "user", "content": texto_usuario})
 
@@ -53,7 +49,10 @@ def pensar(texto_usuario: str) -> str:
             }
         )
 
-        resposta = response['message']['content'].strip().translate(_CHARS_PROIBIDOS)
+        resposta = response['message']['content'].strip()
+
+        for char in ['*', '_', '#', '—', '~']:
+            resposta = resposta.replace(char, '')
 
         historico_conversa.append({"role": "assistant", "content": resposta})
         return resposta

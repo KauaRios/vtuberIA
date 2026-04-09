@@ -3,51 +3,39 @@ import subprocess
 import io
 import edge_tts
 
-# ThalitaMultilingualNeural: a voz pt-BR mais nova e natural disponível no edge-tts
-# Treinada com dados multilíngues — soa bem mais realista que FranciscaNeural
-# Formato longo obrigatório para evitar NoAudioReceived
-VOZ = "Microsoft Server Speech Text to Speech Voice (pt-BR, ThalitaMultilingualNeural)"
+# ThalitaNeural: voz feminina mais jovem e expressiva disponível em pt-BR no edge-tts
+# Soa mais animada e energética que FranciscaNeural — ideal para VTuber
+VOZ = "Microsoft Server Speech Text to Speech Voice (pt-BR, ThalitaNeural)"
 
-VELOCIDADE = "+12%"  # Um pouco acima do normal — energia de VTuber sem atropelar
-TOM = "+10Hz"        # Levemente mais agudo — mais expressivo e jovem
-
-# Caracteres que quebram o TTS — maketrans é mais rápido que replace em loop
-_CHARS_PROIBIDOS = str.maketrans('', '', '*_#—~[]')
+# Velocidade da fala: +15% deixa mais agitada e com energia de streamer
+VELOCIDADE = "+15%"
+# Tom: +15Hz deixa a voz mais aguda, aproximando do estilo anime/VTuber
+TOM = "+15Hz"
 
 
 async def _sintetizar_e_falar(texto: str):
-    try:
-        comunicar = edge_tts.Communicate(texto, VOZ, rate=VELOCIDADE, pitch=TOM)
-        buffer = io.BytesIO()
+    comunicar = edge_tts.Communicate(texto, VOZ, rate=VELOCIDADE, pitch=TOM)
+    buffer = io.BytesIO()
 
-        async for chunk in comunicar.stream():
-            if chunk["type"] == "audio":
-                buffer.write(chunk["data"])
+    async for chunk in comunicar.stream():
+        if chunk["type"] == "audio":
+            buffer.write(chunk["data"])
 
-        audio = buffer.getvalue()
+    buffer.seek(0)
+    audio = buffer.read()
 
-        if not audio:
-            print("[voz_saida] Nenhum audio recebido.")
-            return
+    if not audio:
+        return
 
-        subprocess.Popen(
-            ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-i", "pipe:0"],
-            stdin=subprocess.PIPE,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        ).communicate(input=audio)
-
-    except Exception as e:
-        print(f"[voz_saida] Erro na sintese: {e}")
+    subprocess.Popen(
+        ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-i", "pipe:0"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    ).communicate(input=audio)
 
 
 def falar(texto: str):
-    if not texto:
+    if not texto or not texto.strip():
         return
-
-    texto = texto.translate(_CHARS_PROIBIDOS).strip()
-
-    if not texto:
-        return
-
     asyncio.run(_sintetizar_e_falar(texto))

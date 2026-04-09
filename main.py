@@ -5,7 +5,7 @@ import voz_saida
 
 def executar_ia():
     print("=" * 40)
-    print("  Onichan — Online")
+    print("  IA  — Online")
     print("=" * 40)
 
     while True:
@@ -15,10 +15,10 @@ def executar_ia():
             continue
 
         print(f"\n[Você]: {fala_usuario}")
-        print("[Onichan está pensando...]")
+        print("[IA está pensando...]")
 
         resposta = cerebro.pensar(fala_usuario)
-        print(f"[Onichan]: {resposta}\n")
+        print(f"[IA ]: {resposta}\n")
 
         voz_saida.falar(resposta)
 
