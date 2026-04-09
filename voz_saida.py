@@ -4,7 +4,7 @@ import io
 import edge_tts
 
 # ThalitaNeural: voz feminina mais jovem e expressiva disponível em pt-BR no edge-tts
-# Soa mais animada e energética que FranciscaNeural — ideal para VTuber
+
 VOZ = "Microsoft Server Speech Text to Speech Voice (pt-BR, ThalitaNeural)"
 
 # Velocidade da fala: +15% deixa mais agitada e com energia de streamer
