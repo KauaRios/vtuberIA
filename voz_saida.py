@@ -3,12 +3,14 @@ import subprocess
 import io
 import edge_tts
 
-VOZ = "Microsoft Server Speech Text to Speech Voice (pt-BR, FranciscaNeural)"
+# ThalitaNeural: voz feminina mais jovem e expressiva disponível em pt-BR no edge-tts
+# Soa mais animada e energética que FranciscaNeural — ideal para VTuber
+VOZ = "Microsoft Server Speech Text to Speech Voice (pt-BR, ThalitaNeural)"
 
-# Velocidade da fala: +0% = normal, +10% = um pouco mais rápida (melhor para VTuber)
-VELOCIDADE = "+10%"
-# Tom: +0Hz = normal, valores positivos = mais agudo (mais anime/VTuber)
-TOM = "+5Hz"
+# Velocidade da fala: +15% deixa mais agitada e com energia de streamer
+VELOCIDADE = "+15%"
+# Tom: +15Hz deixa a voz mais aguda, aproximando do estilo anime/VTuber
+TOM = "+15Hz"
 
 
 async def _sintetizar_e_falar(texto: str):
