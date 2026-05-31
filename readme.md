@@ -1,4 +1,4 @@
-# 🎙️ DeusaDoKauã — IA VTuber Autônoma
+# 🎙️ — IA VTuber Autônoma
 
 Um sistema de inteligência artificial em tempo real projetado para atuar como uma VTuber autônoma, gamer e interativa. Construído com arquitetura modular em Python, rodando 100% localmente para garantir baixa latência e otimizado para ecossistemas Linux (Pipewire/ALSA).
 
